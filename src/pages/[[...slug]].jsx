@@ -9,9 +9,9 @@ export default function Index(props) {
             props.blocks.map(({ _template, ...data }, i) => {
                 switch (_template) {
                     case 'Title':
-                        return ( <Title key={i}>d</Title> );
+                        return ( <Title key={i}>{data.value}</Title> );
                     case 'Body':
-                        return ( <Body key={i}>d</Body>);
+                        return ( <Body key={i}>{data.value}</Body>);
                     default:
                         return null
                 }
