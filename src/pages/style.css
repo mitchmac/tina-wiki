@@ -1,0 +1,39 @@
+html {
+    margin: 2em 0
+}
+
+body {
+    font-size: 21px;
+    line-height: 1.3em;
+    font-family: serif;
+    text-rendering: optimizeLegibility;
+    max-width: 800px;
+    margin: auto;
+    padding: 0 1.5em;
+    color: #303030;
+    background-color: #fafafa
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: .75em auto
+}
+
+pre {
+    font-size: 18px;
+    padding: 10px;
+    background-color: #eee
+}
+
+blockquote {
+    border-left: 5px solid #eee;
+    padding: 10px
+}
+
+td, th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    min-width: 40px
+}

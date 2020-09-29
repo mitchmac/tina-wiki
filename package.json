@@ -1,0 +1,23 @@
+{
+  "name": "tina-side",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-glob": "^3.2.4",
+    "fs": "0.0.1-security",
+    "next": "^9.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-tinacms-inline": "^0.29.0",
+    "styled-components": "^5.2.0",
+    "tinacms": "^0.29.0"
+  }
+}

@@ -1,0 +1,1 @@
+- json for content blocks (section, figure)
