@@ -1,1 +1,3 @@
 - json for content blocks (section, figure)
+- code style
+- search

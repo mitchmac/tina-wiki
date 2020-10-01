@@ -1,12 +1,13 @@
 import Title from '../components/Title';
 import Body from '../components/Body';
+import EditLink from '../components/EditLink';
 
 import { getContentFiles, readFile, getSlug } from '../utils/content';
 
 export default function Index(props) {
     return <div>
         {
-            props.blocks.map(({ _template, ...data }, i) => {
+            props.data.blocks.map(({ _template, ...data }, i) => {
                 switch (_template) {
                     case 'Title':
                         return ( <Title key={i}>{data.value}</Title> );
@@ -17,6 +18,7 @@ export default function Index(props) {
                 }
             })
         }
+        <EditLink slug={props.slug} />
     </div>
 }
 
@@ -28,7 +30,7 @@ export async function getStaticProps({ params:{ slug } }) {
     const content = await readFile(`content/${slug}.json`);
 
     return {
-        props: JSON.parse(content)
+        props: {data: JSON.parse(content), slug: slug}
     };
 }
 
