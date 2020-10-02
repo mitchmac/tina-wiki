@@ -2,7 +2,6 @@ import { withTina, useForm, usePlugin, useCMS } from 'tinacms'
 import { InlineForm, BlocksControls, InlineBlocks, InlineText } from 'react-tinacms-inline'
 import { InlineWysiwyg } from 'react-tinacms-editor'
 
-
 import Title from '../components/Title'
 import Body from '../components/Body'
 
@@ -15,29 +14,34 @@ function Tina(props) {
             return getContent()
         },
         onSubmit(data, form) {
-            console.log(data);
-
-
-            //PUT /projects/:id/repository/files/:file_path
-
-            cms.alerts.success('Saved!')
+            //cms.alerts.success('Saved!')
+            return saveContent(data);
         }
     }
 
     async function saveContent(data) {
-        const response = await fetch(url, {
-            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
+        const urlParams = new URLSearchParams(window.location.search);
+        let slug = encodeURIComponent(urlParams.get('slug'));
+
+        let contentString = JSON.stringify(data);
+
+        const response = await fetch(`https://gitlab.com/api/v4/projects/mitchmac%2Fwiki-test/repository/files/content%2F${slug}.json`, {
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
+                'PRIVATE-TOKEN': ''
             },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
+            body: JSON.stringify({
+                content: contentString,
+                commit_message: 'Testing 123',
+                branch: 'master'
+            })
         });
+        console.log(response);
+        /*
+author_email (optional) - Specify the commit author’s email address
+author_name (optional) - Specify the commit author’s name
+         */
     }
 
     async function getContent() {
