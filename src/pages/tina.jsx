@@ -8,28 +8,47 @@ import Body from '../components/Body'
 function Tina(props) {
     const cms = useCMS();
 
+    //&state
+    (function() {
+        if (typeof window !== 'undefined' && window.location.hash) {
+            const hashParams = new URLSearchParams(window.location.hash.replace("#","?"));
+            let token = hashParams.get('access_token');
+            localStorage.setItem('token', token);
+
+            window.location.replace(window.location.href.split('#')[0] + '?slug=' + localStorage.getItem('last_slug'));
+        }
+
+        if (typeof localStorage !== 'undefined' && !localStorage.getItem('token')) {
+            const urlParams = new URLSearchParams(window.location.search);
+            let slug = encodeURIComponent(urlParams.get('slug'));
+
+            localStorage.setItem('last_slug', slug);
+            window.location.replace(`https://gitlab.com/oauth/authorize?client_id=${process.env['NEXT_PUBLIC_GITLAB_CLIENT_ID']}&redirect_uri=${process.env['NEXT_PUBLIC_GITLAB_OAUTH_REDIRECT']}&response_type=token&scope=api`);
+        }
+    }());
+
     const formConfig = {
         id: 'editor',
         loadInitialValues() {
             return getContent()
         },
         onSubmit(data, form) {
-            //cms.alerts.success('Saved!')
             return saveContent(data);
         }
-    }
+    };
 
     async function saveContent(data) {
         const urlParams = new URLSearchParams(window.location.search);
         let slug = encodeURIComponent(urlParams.get('slug'));
+        let repo = encodeURIComponent(process.env['NEXT_PUBLIC_GITLAB_REPOSITORY']);
 
         let contentString = JSON.stringify(data);
 
-        const response = await fetch(`https://gitlab.com/api/v4/projects/mitchmac%2Fwiki-test/repository/files/content%2F${slug}.json`, {
+        const response = await fetch(`https://gitlab.com/api/v4/projects/${repo}/repository/files/content%2F${slug}.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'PRIVATE-TOKEN': ''
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify({
                 content: contentString,
@@ -38,18 +57,19 @@ function Tina(props) {
             })
         });
         console.log(response);
-        /*
-author_email (optional) - Specify the commit author’s email address
-author_name (optional) - Specify the commit author’s name
-         */
     }
 
     async function getContent() {
         // Handle some errors, please?
         const urlParams = new URLSearchParams(window.location.search);
         let slug = encodeURIComponent(urlParams.get('slug'));
+        let repo = encodeURIComponent(process.env['NEXT_PUBLIC_GITLAB_REPOSITORY']);
 
-        const res = await fetch(`https://gitlab.com/api/v4/projects/mitchmac%2Fwiki-test/repository/files/content%2F${slug}.json/raw?ref=master`);
+        const res = await fetch(`https://gitlab.com/api/v4/projects/${repo}/repository/files/content%2F${slug}.json/raw?ref=master`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+        });
         return await res.json();
     }
 
