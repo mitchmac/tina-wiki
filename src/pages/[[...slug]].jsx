@@ -7,13 +7,15 @@ import { getContentFiles, readFile, getSlug } from '../utils/content';
 import Head from 'next/head'
 
 export default function Index(props) {
-    let title = '';
     return <div>
+        <Head>
+            <title>{props.data.meta.title}</title>
+            <meta name="Description" content={props.data.meta.description} />
+        </Head>
         {
             props.data.blocks.map(({ _template, ...data }, i) => {
                 switch (_template) {
                     case 'Title':
-                        title = data.value;
                         return ( <Title key={i}>{data.value}</Title> );
                     case 'Body':
                         return ( <Body key={i}>{data.value}</Body>);
@@ -22,9 +24,6 @@ export default function Index(props) {
                 }
             })
         }
-        <Head>
-            <title>{title}</title>
-        </Head>
         <EditLink slug={props.slug} />
     </div>
 }
