@@ -1,6 +1,6 @@
 {
   "blocks": [
-    {"value":  "hello", "_template": "Title"},
+    {"value":  "Hello", "_template": "Title"},
     {"value":  "hello 2", "_template": "Title"},
     {"value":  "hello 2", "_template": "Body"}
   ],

@@ -18,7 +18,9 @@
     "react-dom": "^16.13.1",
     "react-tinacms-editor": "^0.30.0",
     "react-tinacms-inline": "^0.29.0",
+    "react-typography": "^0.16.19",
     "styled-components": "^5.2.0",
-    "tinacms": "^0.29.0"
+    "tinacms": "^0.29.0",
+    "typography": "^0.16.19"
   }
 }

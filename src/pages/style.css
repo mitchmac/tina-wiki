@@ -3,10 +3,6 @@ html {
 }
 
 body {
-    font-size: 21px;
-    line-height: 1.3em;
-    font-family: serif;
-    text-rendering: optimizeLegibility;
     max-width: 800px;
     margin: auto;
     padding: 0 1.5em;
@@ -21,7 +17,6 @@ img {
 }
 
 pre {
-    font-size: 18px;
     padding: 10px;
     background-color: #eee
 }
