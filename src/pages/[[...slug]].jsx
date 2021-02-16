@@ -6,6 +6,10 @@ import { getContentFiles, readFile, getSlug } from '../utils/content';
 
 import Head from 'next/head'
 
+export const config = {
+  unstable_runtimeJS: false
+}
+
 export default function Index(props) {
     return <div>
         <Head>
